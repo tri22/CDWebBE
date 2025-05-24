@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
         String enumKey = e.getFieldError().getDefaultMessage();
         ErrorCode errorCode = ErrorCode.KEY_INVALID;
         try {
-            errorCode =  ErrorCode.valueOf(enumKey);
+            errorCode = ErrorCode.valueOf(enumKey);
         } catch (IllegalArgumentException exception) {
             exception.getMessage();
         }
