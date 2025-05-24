@@ -22,14 +22,14 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    public ApiResponse<UserResponse> creatUser(@RequestBody @Valid UserCreationReq req){
+    public ApiResponse<UserResponse> creatUser(@RequestBody @Valid UserCreationReq req) {
         ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(userService.createUser(req));
         return apiResponse;
     }
 
     @GetMapping("/all")
-    public ApiResponse<List<UserResponse>> getUsers(){
+    public ApiResponse<List<UserResponse>> getUsers() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         auth.getAuthorities().forEach(a -> log.info("Authority: {}", a.getAuthority()));
         return ApiResponse.<List<UserResponse>>builder()
@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/get/{userId}")
-    public ApiResponse<UserResponse> getUserById(@PathVariable("userId") Long userId){
+    public ApiResponse<UserResponse> getUserById(@PathVariable("userId") Long userId) {
 
         ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(userService.getUserById(userId));
@@ -48,14 +48,14 @@ public class UserController {
     }
 
     @PutMapping("/update/{userId}")
-    public ApiResponse<UserResponse> updateUser(@PathVariable("userId") long id,@RequestBody UserUpdateReq req){
+    public ApiResponse<UserResponse> updateUser(@PathVariable("userId") long id, @RequestBody UserUpdateReq req) {
         ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(userService.updateUser(id,req));
+        apiResponse.setResult(userService.updateUser(id, req));
         return apiResponse;
     }
 
     @DeleteMapping("/delete/{userId}")
-    public void deleteUser(@PathVariable("userId") long id){
+    public void deleteUser(@PathVariable("userId") long id) {
         userService.deleteUser(id);
     }
 }

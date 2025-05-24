@@ -1,4 +1,5 @@
 package com.example.web.mapper;
+
 import com.example.web.dto.request.UserCreationReq;
 import com.example.web.dto.request.UserUpdateReq;
 import com.example.web.dto.response.UserResponse;
@@ -11,8 +12,10 @@ import org.mapstruct.MappingTarget;
 public interface IUserMapper {
 
     User toUser(UserCreationReq req);
-    @Mapping(source ="firstname" , target = "firstname")
-    @Mapping(source ="lastname" , target = "lastname")
+
+    @Mapping(source = "firstname", target = "firstname")
+    @Mapping(source = "lastname", target = "lastname")
     UserResponse toUserResponse(User user);
+
     void updateUser(@MappingTarget User user, UserUpdateReq req);
 }
