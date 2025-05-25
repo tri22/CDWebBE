@@ -6,7 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.web.dto.request.ProductRequest;
+import com.example.web.dto.response.ProductResponse;
 import com.example.web.entity.Product;
+import com.example.web.mapper.IProductMapper;
 import com.example.web.repository.ProductRepository;
 
 @Service
@@ -15,28 +18,27 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    @Autowired
+    private IProductMapper productMapper;
+
+    public List<ProductResponse> getAllProducts() {
+        return productMapper.toProductResponseList(productRepository.findAll());
     }
 
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+    public Optional<ProductResponse> getProductById(Long id) {
+        return productRepository.findById(id)
+                .map(productMapper::toProductResponse);
     }
 
-    public Product createProduct(Product product) {
-        return productRepository.save(product);
+    public ProductResponse createProduct(ProductRequest productRequest) {
+        Product product = productMapper.toEntity(productRequest);
+        return productMapper.toProductResponse(productRepository.save(product));
     }
 
-    public Optional<Product> updateProduct(Long id, Product productDetails) {
+    public Optional<ProductResponse> updateProduct(Long id, ProductRequest productRequest) {
         return productRepository.findById(id).map(product -> {
-            product.setPdName(productDetails.getPdName());
-            product.setPdPrice(productDetails.getPdPrice());
-            product.setPdImage(productDetails.getPdImage());
-            product.setPdCategory(productDetails.getPdCategory());
-            product.setPdDescribe(productDetails.getPdDescribe());
-            product.setPdColor(productDetails.getPdColor());
-            product.setPdRating(productDetails.getPdRating());
-            return productRepository.save(product);
+            productMapper.updateProduct(product, productRequest);
+            return productMapper.toProductResponse(productRepository.save(product));
         });
     }
 
