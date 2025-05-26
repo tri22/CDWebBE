@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "users")
 @AllArgsConstructor
@@ -23,7 +25,12 @@ public class User {
     private String email;
     private String phone;
     private LocalDate birthday;
-
     private String role;
+//    @OneToOne(mappedBy = "users")
+//    private Cart cart;
+//    @OneToMany(mappedBy = "users")
+//    private Set<Order> orders;
+//    @OneToMany(mappedBy = "users")
+//    private Set<Comment> comments;
 
 }
