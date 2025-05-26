@@ -18,5 +18,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+    private String image;
+    private String pdCategory;
+    private String description;
+    private int ratting;
 
 }
