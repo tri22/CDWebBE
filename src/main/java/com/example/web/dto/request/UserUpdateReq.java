@@ -17,7 +17,6 @@ public class UserUpdateReq {
     String password;
     String email;
     String phone;
-    String firstname;
-    String lastname;
+    String fullName;
     String role;
 }

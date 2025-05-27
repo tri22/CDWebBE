@@ -13,6 +13,8 @@ import java.util.Set;
 @Builder
 @ToString
 @Data
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -20,14 +22,13 @@ public class User {
     private long id;
     private String username;
     private String password;
-    private String firstname;
-    private String lastname;
+    private String fullName;
     private String email;
     private String phone;
     private LocalDate birthday;
     private String role;
-//    @OneToOne(mappedBy = "users")
-//    private Cart cart;
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
 //    @OneToMany(mappedBy = "users")
 //    private Set<Order> orders;
 //    @OneToMany(mappedBy = "users")
