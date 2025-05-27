@@ -13,8 +13,6 @@ public interface IUserMapper {
 
     User toUser(UserCreationReq req);
 
-    @Mapping(source = "firstname", target = "firstname")
-    @Mapping(source = "lastname", target = "lastname")
     UserResponse toUserResponse(User user);
 
     void updateUser(@MappingTarget User user, UserUpdateReq req);
