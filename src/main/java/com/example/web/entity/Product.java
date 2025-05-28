@@ -22,7 +22,5 @@ public class Product {
     private String description;
     private int ratting;
 
-    @ManyToOne
-    @JoinColumn(name = "cart_item_id")
-    private CartItem cartItem;
+
 }

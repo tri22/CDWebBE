@@ -5,12 +5,8 @@ import com.example.web.entity.CartItem;
 import com.example.web.entity.Product;
 import com.example.web.entity.User;
 import com.example.web.repository.CartRepository;
-import com.example.web.repository.ProductRepository;
-import com.example.web.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CartService {
@@ -20,10 +16,12 @@ public class CartService {
     @Autowired
     CartItemService cartItemService;
 
+    @Autowired
+    UserService userService;
 
 
-
-    public void addToCart(User user,Product product,int quantity) {
+    public void addToCart(Product product,int quantity) {
+        User user = userService.getCurrentUser();
         Cart cart = user.getCart();
         if (cart == null) {
             cart = new Cart();
@@ -45,7 +43,8 @@ public class CartService {
         }
     }
 
-    public boolean removeCartItem(User user,Product product) {
+    public void removeCartItem(Product product) {
+        User user = userService.getCurrentUser();
         Cart cart = user.getCart();
         CartItem itemToRemove = cart.getItems().stream()
                 .filter(item -> item.getProduct().getId()==(product.getId()))
@@ -55,8 +54,15 @@ public class CartService {
             cart.getItems().remove(itemToRemove); // Xóa khỏi danh sách
             // Nếu bạn dùng CascadeType.ALL thì chỉ cần gọi save cart
             cartItemService.deleteItem(itemToRemove); // hoặc xóa trực tiếp
-            return true;
         }
-        return false;
+    }
+
+    public Cart getCart() {
+        User user = userService.getCurrentUser();
+        Cart cart = user.getCart();
+        if (cart == null) {
+            cart = new Cart();
+        }
+        return cart;
     }
 }
