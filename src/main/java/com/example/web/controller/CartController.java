@@ -1,9 +1,11 @@
 package com.example.web.controller;
 
 
+import com.example.web.dto.request.CartItemRequest;
 import com.example.web.dto.request.UserUpdateReq;
 import com.example.web.dto.response.ApiResponse;
 import com.example.web.dto.response.UserResponse;
+import com.example.web.entity.Cart;
 import com.example.web.entity.Product;
 import com.example.web.entity.User;
 import com.example.web.service.CartService;
@@ -20,13 +22,18 @@ public class CartController {
     private CartService cartService;
 
     @PostMapping("/add-item")
-    public void addToCart(@RequestBody User user,@RequestBody Product product,@RequestBody int quantity) {
-        cartService.addToCart(user,product,quantity);
+    public void addToCart(@RequestBody CartItemRequest request) {
+        cartService.addToCart(request.getProduct(),request.getQuantity());
     }
 
     @DeleteMapping("/delete-item")
-    public void deleteCartItem(@RequestBody User user,@RequestBody Product product) {
-        cartService.removeCartItem(user,product);
+    public void deleteCartItem(@RequestBody CartItemRequest request) {
+        cartService.removeCartItem(request.getProduct());
+    }
+
+    @GetMapping
+    public Cart getCart() {
+       return cartService.getCart();
     }
 
 }

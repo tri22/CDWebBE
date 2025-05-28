@@ -19,9 +19,6 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    private String address;
-    private String phone;
-    private String email;
     private String note;
     @ManyToOne
     @JoinColumn(name = "payment_method_id")
