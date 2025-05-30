@@ -17,4 +17,5 @@ import lombok.experimental.FieldDefaults;
 public class CartItemRequest {
     long productId;
     int quantity;
+    long cartItemId;
 }
