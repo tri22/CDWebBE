@@ -11,9 +11,10 @@ import java.util.Date;
 @Builder
 @ToString
 @Data
+@Table(name = "comments")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String content;
     private Date createAt;

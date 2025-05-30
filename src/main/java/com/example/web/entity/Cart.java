@@ -11,9 +11,10 @@ import java.util.Set;
 @Builder
 @ToString
 @Data
+@Table(name = "carts")
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @OneToOne
     @JoinColumn(name = "user_id")

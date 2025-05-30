@@ -15,6 +15,7 @@ import java.util.Set;
 @Data
 @Getter
 @Setter
+@Table(name = "users")
 public class User {
 
     @Id
@@ -31,9 +32,9 @@ public class User {
     private String role;
     @OneToOne(mappedBy = "user")
     private Cart cart;
-//    @OneToMany(mappedBy = "users")
-//    private Set<Order> orders;
-//    @OneToMany(mappedBy = "users")
-//    private Set<Comment> comments;
+    // @OneToMany(mappedBy = "users")
+    // private Set<Order> orders;
+    // @OneToMany(mappedBy = "users")
+    // private Set<Comment> comments;
 
 }

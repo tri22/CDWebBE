@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 @ToString
 @Data
+@Table(name = "stock_in_details")
 public class StockInDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )

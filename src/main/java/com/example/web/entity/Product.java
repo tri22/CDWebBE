@@ -9,9 +9,10 @@ import lombok.*;
 @Builder
 @ToString
 @Data
+@Table(name = "products")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private double price;
@@ -20,7 +21,7 @@ public class Product {
     private Category category;
     private String image;
     private String description;
-    private int ratting;
-
+    private String color;
+    private int rating;
 
 }
