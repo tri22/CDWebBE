@@ -29,10 +29,12 @@ public class AuthenticationController {
     AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationReq req) throws JOSEException {
+    AuthenticationResponse authenticate(@RequestBody AuthenticationReq req) throws JOSEException {
         var result = authenticationService.authenticate(req);
-        return ApiResponse.<AuthenticationResponse>builder()
-                .result(result)
+        return AuthenticationResponse.builder()
+                .token(result.getToken())
+                .authenticated(result.isAuthenticated())
+                .role(result.getRole())
                 .build();
     }
 

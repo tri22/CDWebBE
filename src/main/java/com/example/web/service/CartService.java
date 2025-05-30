@@ -8,6 +8,9 @@ import com.example.web.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 @Service
 public class CartService {
 
@@ -62,6 +65,8 @@ public class CartService {
         Cart cart = user.getCart();
         if (cart == null) {
             cart = new Cart();
+            cart.setUser(user);
+            cart.setItems(new HashSet<CartItem>());
         }
         return cart;
     }
