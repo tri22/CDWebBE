@@ -11,19 +11,28 @@ import java.time.LocalDate;
 @Builder
 @ToString
 @Data
+@Getter
+@Setter
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false, unique = true)
     private String username;
     private String password;
-    private String firstname;
-    private String lastname;
+    @Column(name = "fullname")
+    private String fullName;
     private String email;
     private String phone;
     private LocalDate birthday;
-
     private String role;
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+    // @OneToMany(mappedBy = "users")
+    // private Set<Order> orders;
+    // @OneToMany(mappedBy = "users")
+    // private Set<Comment> comments;
 
 }

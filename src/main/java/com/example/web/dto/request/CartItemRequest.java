@@ -1,8 +1,8 @@
 package com.example.web.dto.request;
 
+
+import com.example.web.entity.Product;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -12,11 +12,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserUpdateReq {
-    String username;
-    String password;
-    String email;
-    String phone;
-    String fullName;
-    String role;
+@Setter
+@Getter
+public class CartItemRequest {
+    Product product;
+    int quantity;
 }

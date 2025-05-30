@@ -8,6 +8,8 @@ import com.example.web.dto.response.IntrospectResponse;
 import com.example.web.entity.User;
 import com.example.web.exception.AppException;
 import com.example.web.exception.ErrorCode;
+import com.example.web.mapper.IUserMapper;
+import com.example.web.mapper.IUserMapperImpl;
 import com.example.web.repository.UserRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -38,6 +40,7 @@ import java.util.StringJoiner;
 @Slf4j
 public class AuthenticationService {
     UserRepository userRepository;
+    IUserMapper userMapper;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -76,6 +79,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(token)
                 .authenticated(true)
+                .role(user.getRole())
                 .build();
     }
 

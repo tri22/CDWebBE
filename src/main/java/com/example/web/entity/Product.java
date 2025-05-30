@@ -3,24 +3,25 @@ package com.example.web.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity(name = "products")
+@Entity(name = "product")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString
 @Data
-@Table(name = "product")
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long pdId;
-
-    private String pdName;
-    private double pdPrice;
-    private String pdImage;
-    private String pdCategory;
-    private String pdDescribe;
-    private String pdColor;
-    private int pdRating;
+    private long id;
+    private String name;
+    private double price;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+    private String image;
+    private String description;
+    private String color;
+    private int rating;
 
 }
