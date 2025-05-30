@@ -10,7 +10,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @ToString
-@Data
+@Getter
+@Setter
 @Table(name = "carts")
 public class Cart {
     @Id
@@ -20,6 +21,7 @@ public class Cart {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CartItem> items;
+
 }

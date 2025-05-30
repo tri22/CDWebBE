@@ -21,8 +21,8 @@ public class ProductService {
     @Autowired
     private IProductMapper productMapper;
 
-    public List<ProductResponse> getAllProducts() {
-        return productMapper.toProductResponseList(productRepository.findAll());
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
     }
 
     public Optional<ProductResponse> getProductById(Long id) {
