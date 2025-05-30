@@ -1,5 +1,6 @@
 package com.example.web.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,8 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
-@Data
+@ToString(exclude = "cart")
 @Getter
 @Setter
 @Table(name = "users")
@@ -31,6 +31,7 @@ public class User {
     private LocalDate birthday;
     private String role;
     @OneToOne(mappedBy = "user")
+    @JsonIgnore
     private Cart cart;
     // @OneToMany(mappedBy = "users")
     // private Set<Order> orders;

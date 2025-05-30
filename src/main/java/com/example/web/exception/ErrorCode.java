@@ -20,6 +20,7 @@ public enum ErrorCode {
     UNAUTHENTICATED(1007, "Unauthenticated!.", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1008, "You do not have permission!.", HttpStatus.FORBIDDEN),
     PRODUCT_EXISTED(1009, "Product existed!.", HttpStatus.BAD_REQUEST),
+    PRODUCT_NOT_EXIST(1009, "Product not exist!.", HttpStatus.BAD_REQUEST),
     VOUCHER_EXISTED(1009, "Voucher existed!.", HttpStatus.BAD_REQUEST),
     ;
 
