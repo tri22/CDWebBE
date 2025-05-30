@@ -60,7 +60,11 @@ public class CartService {
             cartItemRepository.deleteById(cartItemId);
     }
 
-
+    public void updateCartItemQuantity(long cartItemId, int quantity) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(()->  new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION));
+        cartItem.setQuantity(quantity);
+        cartItemRepository.save(cartItem);
+    }
 
     public Cart getCart() {
         User user = userService.getCurrentUser();

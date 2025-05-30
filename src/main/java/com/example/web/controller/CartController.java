@@ -67,6 +67,27 @@ public class CartController {
         }
     }
 
+    @PutMapping("/update-item")
+    public ApiResponse<?> updateItemQuantity(@RequestBody CartItemRequest request) {
+        try {
+            cartService.updateCartItemQuantity(request.getCartItemId(), request.getQuantity());
+            return ApiResponse.builder()
+                    .message("Cập nhập số lượng sản phẩm thành công.")
+                    .code(HttpStatus.OK.value())
+                    .build();
+        } catch (AppException e) {
+            return ApiResponse.builder()
+                    .message(e.getMessage())
+                    .code(HttpStatus.BAD_REQUEST.value())
+                    .build();
+        } catch (Exception e) {
+            return ApiResponse.builder()
+                    .message("Đã xảy ra lỗi không xác định.")
+                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .build();
+        }
+    }
+
     @GetMapping
     public Cart getCart() {
        return cartService.getCart();
