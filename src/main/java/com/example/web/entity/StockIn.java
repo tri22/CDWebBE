@@ -18,5 +18,5 @@ public class StockIn {
     // private int totalQuantity;
     // private double totalPrice;
     // @OneToMany(mappedBy = "stock_in")
-    // private Set<StockInDetail> details
+    // private Set<StockInDetail> details;
 }
