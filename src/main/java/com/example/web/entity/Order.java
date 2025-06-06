@@ -21,6 +21,7 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
     private String note;
+    private String status;
     @ManyToOne
     @JoinColumn(name = "payment_method_id")
     private PaymentMethod paymentMethod;
