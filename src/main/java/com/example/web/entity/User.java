@@ -33,9 +33,11 @@ public class User {
     @OneToOne(mappedBy = "user")
     @JsonIgnore
     private Cart cart;
-    // @OneToMany(mappedBy = "users")
-    // private Set<Order> orders;
-    // @OneToMany(mappedBy = "users")
-    // private Set<Comment> comments;
+    @OneToMany(mappedBy = "user")
+    private Set<Blog> blogs;
+    @OneToMany(mappedBy = "user")
+    private Set<Order> orders;
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments;
 
 }

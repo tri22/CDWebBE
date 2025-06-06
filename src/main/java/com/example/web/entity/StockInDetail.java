@@ -19,4 +19,7 @@ public class StockInDetail {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+    @ManyToOne
+    @JoinColumn(name = "stock_in_id")
+    private StockIn stock_in;
 }
