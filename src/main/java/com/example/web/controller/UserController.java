@@ -42,7 +42,6 @@ public class UserController {
 
     @GetMapping("/get/{userId}")
     public ApiResponse<UserResponse> getUserById(@PathVariable("userId") Long userId) {
-
         ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(userService.getUserById(userId));
         return apiResponse;

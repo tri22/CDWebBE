@@ -2,6 +2,7 @@ package com.example.web.controller;
 
 import java.util.List;
 
+import com.example.web.dto.response.ApiResponse;
 import com.example.web.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -56,4 +57,5 @@ public class ProductController {
         boolean isDeleted = pdService.deleteProduct(id);
         return isDeleted ? "Product deleted successfully" : "Product not found";
     }
+
 }

@@ -7,8 +7,12 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,4 +24,6 @@ public class UserCreationReq {
     String password;
     String fullName;
     String role;
+    LocalDate birthday;  // thêm dòng này
+    String phone;
 }
