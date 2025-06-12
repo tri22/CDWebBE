@@ -22,7 +22,7 @@ public class ProductService {
     private IProductMapper productMapper;
 
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productRepository.findByDeletedFalse();
     }
 
     public Optional<ProductResponse> getProductById(Long id) {
@@ -43,10 +43,13 @@ public class ProductService {
     }
 
     public boolean deleteProduct(Long id) {
-        if (productRepository.existsById(id)) {
-            productRepository.deleteById(id);
+        try {
+            Product product = productRepository.findById(id).orElseThrow();
+            product.setDeleted(true);
+            productRepository.save(product);
             return true;
+        }catch(Exception e) {
+            return false;
         }
-        return false;
     }
 }

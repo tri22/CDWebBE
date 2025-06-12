@@ -19,7 +19,7 @@ public class ApiEndPoint {
             "/users/delete/{userId}",
 
             // login url
-            "/auth/login"
-
+            "/auth/login",
+            "/cart/*"
     };
 }

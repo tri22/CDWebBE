@@ -52,7 +52,7 @@ public class ProductController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
         boolean isDeleted = pdService.deleteProduct(id);
         return isDeleted ? "Product deleted successfully" : "Product not found";

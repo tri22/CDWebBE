@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface IOrderMapper {
+    @Mapping(source = "id",target = "id")
     @Mapping(source = "user.username",target = "username")
     @Mapping(source = "paymentMethod.name",target = "paymentMethod")
     @Mapping(source = "note", target = "note")

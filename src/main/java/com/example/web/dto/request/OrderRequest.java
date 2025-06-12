@@ -32,4 +32,5 @@ public class OrderRequest {
     private double shippingFee;
     private Set<OrderDetail> details;
     private LocalDate orderDate;
+    private String status;
 }

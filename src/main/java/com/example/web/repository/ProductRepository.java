@@ -5,7 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import com.example.web.entity.Product;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+    List<Product> findByDeletedFalse();
 }

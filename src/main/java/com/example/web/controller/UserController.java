@@ -56,9 +56,14 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{userId}")
-    public void deleteUser(@PathVariable("userId") long id) {
+    public ResponseEntity<ApiResponse<?>> deleteUser(@PathVariable("userId") long id) {
         userService.deleteUser(id);
+        ApiResponse<?> response = new ApiResponse<>();
+        response.setMessage("User deleted successfully");
+        return ResponseEntity.ok(response);
     }
+
+
 
     @GetMapping("/me")
     public ApiResponse<User> getCurrentUser() {

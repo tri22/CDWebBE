@@ -47,6 +47,49 @@ public class OrderService {
             System.out.println(response);
         }
     }
+
+    public OrderResponse updateOrder(Long orderId, OrderRequest request) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() ->
+                new RuntimeException("Order not found with id: " + orderId));
+        // Gán user nếu có
+        if (request.getUser() != null) {
+            order.setUser(request.getUser());
+        }
+
+        // Gán các thuộc tính nếu có
+        if (request.getNote() != null) {
+            order.setNote(request.getNote());
+        }
+
+        if (request.getPaymentMethod() != null) {
+            order.setPaymentMethod(request.getPaymentMethod());
+        }
+
+        if (request.getTotalPrice() != 0) {
+            order.setTotalPrice(request.getTotalPrice());
+        }
+
+        if (request.getTotalQuantity() != 0) {
+            order.setTotalQuantity(request.getTotalQuantity());
+        }
+
+        if (request.getShippingFee() != 0) {
+            order.setShippingFee(request.getShippingFee());
+        }
+
+        if (request.getOrderDate() != null) {
+            order.setOrderDate(request.getOrderDate());
+        }
+
+        if (request.getStatus() != null) {
+            order.setStatus(request.getStatus());
+        }
+
+        if (request.getDetails() != null && !request.getDetails().isEmpty()) {
+            order.setDetails(request.getDetails());
+        }
+        return orderMapper.toOrderResponse(orderRepository.save(order));
+    }
 }
 
 

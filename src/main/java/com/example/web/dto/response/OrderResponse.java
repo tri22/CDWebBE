@@ -21,6 +21,7 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderResponse {
+     long id;
      String username; // ← BẮT BUỘC PHẢI CÓ
      String note;
      String paymentMethod;
@@ -30,6 +31,14 @@ public class OrderResponse {
      double shippingFee;
      Set<OrderDetail> details;
      String status;
+
+     public long getId() {
+          return id;
+     }
+
+     public void setId(long id) {
+          this.id = id;
+     }
 
      public String getStatus() {
           return status;
