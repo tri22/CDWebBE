@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApiEndPoint {
     public static final String[] ADMIN_ENDPOINTS = {
             "/users/all",
+            "/order/all",
     };
 
     public static final String[] PUBLIC_ENDPOINTS = {
@@ -18,7 +19,7 @@ public class ApiEndPoint {
             "/users/delete/{userId}",
 
             // login url
-            "/auth/login"
-
+            "/auth/login",
+            "/cart/*"
     };
 }

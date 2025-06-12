@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -30,5 +31,6 @@ public class OrderRequest {
     private int totalQuantity;
     private double shippingFee;
     private Set<OrderDetail> details;
-    private Date orderDate;
+    private LocalDate orderDate;
+    private String status;
 }

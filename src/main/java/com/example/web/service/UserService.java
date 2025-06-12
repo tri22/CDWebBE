@@ -9,6 +9,7 @@ import com.example.web.exception.ErrorCode;
 import com.example.web.mapper.IUserMapper;
 import com.example.web.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,12 +43,36 @@ public class UserService {
 
     public UserResponse updateUser(long id, UserUpdateReq request) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        userMapper.updateUser(user, request);
+        if (request.getUsername() != null) {
+            user.setUsername(request.getUsername());
+        }
+        if (request.getPassword() != null) {
+            user.setPassword(request.getPassword());
+        }
+        if (request.getEmail() != null) {
+            user.setEmail(request.getEmail());
+        }
+
+        if (request.getPhone() != null) {
+            user.setPhone(request.getPhone());
+        }
+        if (request.getFullName() != null) {
+            user.setFullName(request.getFullName());
+        }
+        if (request.getBirthday() != null) {
+            user.setBirthday(request.getBirthday());
+        }
+
+        if (request.getRole() != null) {
+            user.setRole(request.getRole());
+        }
         return userMapper.toUserResponse(userRepository.save((user)));
     }
 
     public void deleteUser(long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        userRepository.delete(user);
     }
 
     public List<UserResponse> getUsers() {
