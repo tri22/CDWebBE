@@ -5,6 +5,7 @@ import com.example.web.dto.response.OrderResponse;
 import com.example.web.entity.*;
 import com.example.web.mapper.IOrderMapper;
 import com.example.web.mapper.IUserMapper;
+import com.example.web.repository.OrderDetailRepository;
 import com.example.web.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ import java.util.*;
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
 
     @Autowired
     private UserService userService;
@@ -36,6 +40,10 @@ public class OrderService {
 
     public List<OrderResponse> getAllOrder() {
         List<Order> orders = orderRepository.findAll();
+        for (Order order : orders) {
+            Set<OrderDetail> detail = orderDetailRepository.getAllByOrderId(order.getId());
+            order.setDetails(detail);
+        }
         return orders.stream().map(order -> orderMapper.toOrderResponse(order)).toList();
     }
 

@@ -8,6 +8,8 @@ public class ApiEndPoint {
     public static final String[] ADMIN_ENDPOINTS = {
             "/users/all",
             "/order/all",
+
+            "/stock-in/*"
     };
 
     public static final String[] PUBLIC_ENDPOINTS = {
