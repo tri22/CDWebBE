@@ -1,6 +1,5 @@
 package com.example.web.controller;
 
-
 import com.example.web.dto.request.CartItemRequest;
 import com.example.web.dto.request.UserUpdateReq;
 import com.example.web.dto.response.ApiResponse;
@@ -45,9 +44,24 @@ public class CartController {
         }
     }
 
+    @DeleteMapping("/clear")
+    public ApiResponse<?> clearCart() {
+        try {
+            cartService.clearCartForCurrentUser();
+            return ApiResponse.builder()
+                    .message("Giỏ hàng đã được xoá thành công.")
+                    .code(HttpStatus.OK.value())
+                    .build();
+        } catch (Exception e) {
+            return ApiResponse.builder()
+                    .message("Đã xảy ra lỗi khi xoá giỏ hàng.")
+                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .build();
+        }
+    }
 
     @DeleteMapping("/delete-item/{cartItemId}")
-    public ApiResponse<?> deleteCartItem( @PathVariable long cartItemId) {
+    public ApiResponse<?> deleteCartItem(@PathVariable long cartItemId) {
         try {
             cartService.removeCartItemById(cartItemId);
             return ApiResponse.builder()
@@ -90,7 +104,7 @@ public class CartController {
 
     @GetMapping
     public Cart getCart() {
-       return cartService.getCart();
+        return cartService.getCart();
     }
 
 }

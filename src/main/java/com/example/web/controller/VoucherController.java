@@ -33,7 +33,6 @@ public class VoucherController {
 
     }
 
-
     @PutMapping("/update/{voucherId}")
     public ApiResponse<Voucher> updateVoucher(@PathVariable("voucherId") long id, @RequestBody VoucherRequest req) {
         ApiResponse<Voucher> apiResponse = new ApiResponse<>();
@@ -45,6 +44,5 @@ public class VoucherController {
     public void deleteVoucher(@PathVariable("voucherId") long id) {
         voucherService.deleteVoucher(id);
     }
-
 
 }

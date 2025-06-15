@@ -1,19 +1,18 @@
 package com.example.web.mapper;
 
 import com.example.web.dto.request.OrderRequest;
-
 import com.example.web.dto.response.OrderResponse;
-
 import com.example.web.entity.Order;
+import com.example.web.entity.OrderDetail;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface IOrderMapper {
-    @Mapping(source = "id",target = "id")
-    @Mapping(source = "user.username",target = "username")
-    @Mapping(source = "paymentMethod.name",target = "paymentMethod")
+    @Mapping(source = "user", target = "userResponse")
+    @Mapping(source = "paymentMethod.name", target = "paymentMethod")
+    @Mapping(source = "id", target = "id")
     @Mapping(source = "note", target = "note")
     @Mapping(source = "orderDate", target = "orderDate")
     @Mapping(source = "totalPrice", target = "totalPrice")
@@ -24,5 +23,3 @@ public interface IOrderMapper {
 
     Order toOrder(OrderRequest request);
 }
-
-

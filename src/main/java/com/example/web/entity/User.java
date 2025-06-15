@@ -13,10 +13,9 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-@ToString(exclude = {"orders", "cart", "blogs", "comments"})
+@ToString(exclude = { "orders", "cart", "blogs", "comments" })
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -29,12 +28,14 @@ public class User {
     private String phone;
     private LocalDate birthday;
     private String role;
+    private String address;
     @OneToOne(mappedBy = "user")
     @JsonIgnore
     private Cart cart;
     @OneToMany(mappedBy = "user")
     private Set<Blog> blogs;
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private Set<Order> orders;
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments;
@@ -85,6 +86,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public LocalDate getBirthday() {

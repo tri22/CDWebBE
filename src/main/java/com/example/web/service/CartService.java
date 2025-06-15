@@ -33,20 +33,25 @@ public class CartService {
     @Autowired
     ProductRepository productRepository;
 
-
-    public void addToCart(long productId,int quantity) {
+    public void addToCart(long productId, int quantity) {
         User user = userService.getCurrentUser();
         Cart cart = cartRepository.findByUser_Id(user.getId())
-                .orElse(new Cart());;
+                .orElseGet(() -> {
+                    Cart c = new Cart();
+                    c.setUser(user);
+                    c.setItems(new HashSet<>());
+                    return c;
+                });
         // Kiểm tra xem sản phẩm đã có trong giỏ chưa
         CartItem existingItem = cart.getItems().stream()
-                .filter(item -> item.getProduct().getId()==(productId))
+                .filter(item -> item.getProduct().getId() == (productId))
                 .findFirst()
                 .orElse(null);
         if (existingItem != null) {
             existingItem.setQuantity(existingItem.getQuantity() + quantity);
         } else {
-            Product product = productRepository.findById(productId).orElseThrow(()->new AppException(ErrorCode.PRODUCT_NOT_EXIST));
+            Product product = productRepository.findById(productId)
+                    .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXIST));
             CartItem newItem = new CartItem();
             newItem.setProduct(product);
             newItem.setQuantity(quantity);
@@ -56,12 +61,21 @@ public class CartService {
         cartRepository.save(cart);
     }
 
+    public void clearCartForCurrentUser() {
+        User user = userService.getCurrentUser();
+        Cart cart = cartRepository.findByUser_Id(user.getId())
+                .orElseThrow(() -> new AppException(ErrorCode.CART_NOT_FOUND));
+        cart.getItems().clear(); // xoá hết items
+        cartRepository.save(cart);
+    }
+
     public void removeCartItemById(long cartItemId) {
-            cartItemRepository.deleteById(cartItemId);
+        cartItemRepository.deleteById(cartItemId);
     }
 
     public void updateCartItemQuantity(long cartItemId, int quantity) {
-        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(()->  new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION));
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION));
         cartItem.setQuantity(quantity);
         cartItemRepository.save(cartItem);
     }

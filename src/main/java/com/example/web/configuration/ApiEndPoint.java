@@ -1,6 +1,5 @@
 package com.example.web.configuration;
 
-
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -8,7 +7,6 @@ public class ApiEndPoint {
     public static final String[] ADMIN_ENDPOINTS = {
             "/users/all",
             "/order/all",
-
             "/stock-in/*",
 
             "/vouchers/*",
@@ -24,7 +22,7 @@ public class ApiEndPoint {
     };
 
     public static final String[] PUBLIC_ENDPOINTS = {
-            //user crud
+            // user crud
             "/users",
 
             "/users/get/{userId}",
@@ -33,8 +31,9 @@ public class ApiEndPoint {
 
             // login url
             "/auth/login",
-            "/cart/*",
 
-
+            // Product url
+            "/products",
+            "/products/{id}",
     };
 }
