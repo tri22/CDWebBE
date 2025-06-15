@@ -1,9 +1,12 @@
 package com.example.web.dto.response;
 
-import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Data
@@ -12,23 +15,19 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Setter
-@Getter
-public class UserResponse {
-    long id;
+public class UserInfoResponse {
+    Long id;
     String username;
-    String password;
     String fullName;
     String email;
     String phone;
-    LocalDate birthday;
-    String role;
+    String address;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -38,14 +37,6 @@ public class UserResponse {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFullName() {
@@ -72,19 +63,11 @@ public class UserResponse {
         this.phone = phone;
     }
 
-    public LocalDate getBirthday() {
-        return birthday;
+    public String getAddress() {
+        return address;
     }
 
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

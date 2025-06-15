@@ -3,25 +3,20 @@ package com.example.web.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
-
-@Entity(name = "cart")
+@Entity(name = "blogs")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 @Getter
 @Setter
-@Table(name = "carts")
-public class Cart {
+public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne
+    private String title;
+    private String content;
+    private String description;
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CartItem> items;
-
 }

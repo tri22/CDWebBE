@@ -35,39 +35,29 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll());
-
-        return http.build();
-    }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        // PUBLIC endpoints
                         .requestMatchers(HttpMethod.POST, ApiEndPoint.PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.GET, ApiEndPoint.PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.PUT, ApiEndPoint.PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.DELETE, ApiEndPoint.PUBLIC_ENDPOINTS).permitAll()
 
-                        // Bảo vệ các endpoint yêu cầu ROLE_ADMIN
+                        // ADMIN endpoints
                         .requestMatchers(HttpMethod.GET, ApiEndPoint.ADMIN_ENDPOINTS).hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, ApiEndPoint.ADMIN_ENDPOINTS).hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, ApiEndPoint.ADMIN_ENDPOINTS).hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, ApiEndPoint.ADMIN_ENDPOINTS).hasAuthority("ADMIN")
 
-                        // Bảo vệ mọi endpoint còn lại yêu cầu phải xác thực
-                        .anyRequest().authenticated()
-
-                )
+                        // other authenticated
+                        .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
+                        .jwt(jwtConfigurer -> jwtConfigurer
+                                .decoder(jwtDecoder())
                                 .jwtAuthenticationConverter(customJwtAuthentication()))
-                        .authenticationEntryPoint(new JwtAuthenticationEntryPoint()) // Đảm bảo xử lý lỗi ở đây
-                );
-        return httpSecurity.build();
+                        .authenticationEntryPoint(new JwtAuthenticationEntryPoint()));
+
+        return http.build();
     }
 
     @Bean
@@ -99,7 +89,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173/")); // hoặc domain FE của bạn
+        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // hoặc domain FE của bạn
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

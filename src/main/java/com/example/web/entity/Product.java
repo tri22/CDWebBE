@@ -23,5 +23,6 @@ public class Product {
     private String description;
     private String color;
     private int rating;
+    private boolean deleted;
 
 }

@@ -1,6 +1,5 @@
 package com.example.web.dto.request;
 
-
 import com.example.web.entity.Product;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -15,6 +14,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @Getter
 public class CartItemRequest {
-    Product product;
+    long productId;
     int quantity;
+    long cartItemId;
 }
