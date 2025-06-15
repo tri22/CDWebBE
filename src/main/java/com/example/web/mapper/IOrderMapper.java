@@ -10,9 +10,9 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface IOrderMapper {
-    @Mapping(source = "id", target = "id")
     @Mapping(source = "user", target = "userResponse")
     @Mapping(source = "paymentMethod.name", target = "paymentMethod")
+    @Mapping(source = "id", target = "id")
     @Mapping(source = "note", target = "note")
     @Mapping(source = "orderDate", target = "orderDate")
     @Mapping(source = "totalPrice", target = "totalPrice")

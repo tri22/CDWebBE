@@ -2,7 +2,6 @@ package com.example.web.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
@@ -13,11 +12,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "orders")
+@ToString(exclude = { "user", "details" })
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

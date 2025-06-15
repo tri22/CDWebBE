@@ -11,10 +11,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = "cart")
 @Getter
 @Setter
-@Data
+@ToString(exclude = { "orders", "cart", "blogs", "comments" })
 @Table(name = "users")
 public class User {
     @Id

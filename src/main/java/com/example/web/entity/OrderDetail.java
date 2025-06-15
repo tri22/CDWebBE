@@ -1,7 +1,6 @@
 package com.example.web.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +10,9 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
+@ToString(exclude = { "order" })
 @Table(name = "order_details")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
