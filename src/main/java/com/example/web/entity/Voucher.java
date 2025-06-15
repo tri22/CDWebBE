@@ -21,4 +21,13 @@ public class Voucher {
     private String code;
     private String description;
     private int quantity;
+    private int discount;
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
 }

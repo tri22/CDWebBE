@@ -3,6 +3,7 @@ package com.example.web.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -17,9 +18,10 @@ public class StockIn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-     private Date createAt;
-     private int totalQuantity;
-     private double totalPrice;
-     @OneToMany(mappedBy = "stock_in")
-     private Set<StockInDetail> details;
+    private LocalDate createAt;
+    private int quantity;
+    private double price;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

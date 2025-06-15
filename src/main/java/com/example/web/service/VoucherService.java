@@ -20,6 +20,7 @@ public class VoucherService {
         voucher.setCode(req.getCode());
         voucher.setDescription(req.getDescription());
         voucher.setQuantity(req.getQuantity());
+        voucher.setDiscount(req.getDiscount());
         return voucherRepository.save(voucher);
     }
 

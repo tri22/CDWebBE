@@ -1,20 +1,12 @@
 package com.example.web.controller;
 
-import com.example.web.dto.request.UserCreationReq;
-import com.example.web.dto.request.UserUpdateReq;
 import com.example.web.dto.request.VoucherRequest;
 import com.example.web.dto.response.ApiResponse;
-import com.example.web.dto.response.UserResponse;
-import com.example.web.entity.User;
 import com.example.web.entity.Voucher;
-import com.example.web.service.UserService;
 import com.example.web.service.VoucherService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +18,8 @@ public class VoucherController {
     @Autowired
     VoucherService voucherService;
 
-    @PostMapping
-    public ApiResponse<Voucher> creatUser(@RequestBody @Valid VoucherRequest req) {
+    @PostMapping("/add")
+    public ApiResponse<Voucher> creatVoucher(@RequestBody @Valid VoucherRequest req) {
         ApiResponse<Voucher> apiResponse = new ApiResponse<>();
         apiResponse.setResult(voucherService.creatVoucher(req));
         return apiResponse;

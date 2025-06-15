@@ -25,4 +25,5 @@ public class ProductResponse {
     String description;
     String color;
     int rating;
+    int stock;
 }

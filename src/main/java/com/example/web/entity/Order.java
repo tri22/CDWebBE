@@ -9,10 +9,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "orders")
-@Data  // Lombok generate getter/setter
+@ToString(exclude = {"user", "details"})
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
