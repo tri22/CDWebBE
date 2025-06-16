@@ -6,6 +6,11 @@ import com.example.web.dto.response.ApiResponse;
 import com.example.web.dto.response.UserResponse;
 import com.example.web.entity.User;
 import com.example.web.service.UserService;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +34,10 @@ public class UserController {
 
     @Autowired
     JwtAuthenticationFilter jwtAuthenticationFilter;
+
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
 
     @PostMapping
@@ -57,9 +66,42 @@ public class UserController {
     }
 
     @PutMapping("/update/{userId}")
-    public ApiResponse<UserResponse> updateUser(@PathVariable("userId") long id, @RequestBody UserUpdateReq req) {
+
+    public ApiResponse<UserResponse> updateUser(@PathVariable("userId") long id,
+                                                @RequestBody UserUpdateReq req,
+                                                HttpServletRequest request) throws JsonProcessingException {
         ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(userService.updateUser(id, req));
+        User currentUser = jwtAuthenticationFilter.extractUser(request);
+        String ip = request.getRemoteAddr();
+
+        try {
+            UserResponse result = userService.updateUser(id, req);
+            logService.addLog(LogRequest.builder()
+                    .action("UPDATE_USER_SUCCESS")
+                    .user(currentUser)
+                    .ip(ip)
+                    .level("INFO")
+                    .dataIn(req)
+                    .dataOut(objectMapper.writeValueAsString(result))
+                    .date(new Date())
+                    .resource("USER MANAGEMENT")
+                    .build());
+            apiResponse.setResult(result);
+        } catch (Exception e) {
+            logService.addLog(LogRequest.builder()
+                    .action("UPDATE_USER_FAILED")
+                    .user(currentUser)
+                    .ip(ip)
+                    .level("ERROR")
+                    .dataIn(req)
+                    .dataOut(e.getMessage())
+                    .date(new Date())
+                    .resource("USER MANAGEMENT")
+                    .build());
+            throw e;
+        }
+
+
         return apiResponse;
     }
 

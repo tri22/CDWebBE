@@ -14,21 +14,21 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class VoucherRequest {
-    @Size(min = 4 ,message ="Code must longer than 4" )
+    @Size(min = 4 ,message ="INVALID_VOUCHER_CODE" )
     private String code;
     private String description;
     private int quantity;
-    @Min(value = 1, message = "Discount must be at least 1%")
-    @Max(value = 100, message = "Discount must not exceed 100%")
+    @Min(value = 1, message = "INVALID_VOUCHER_DISCOUNT")
+    @Max(value = 100, message = "INVALID_VOUCHER_DISCOUNT")
     private int discount;
 
-    @Min(value = 1, message = "Discount must be at least 1%")
-    @Max(value = 100, message = "Discount must not exceed 100%")
+    @Min(value = 1, message = "INVALID_VOUCHER_DISCOUNT")
+    @Max(value = 100, message = "INVALID_VOUCHER_DISCOUNT")
     public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(@Min(value = 1, message = "Discount must be at least 1%") @Max(value = 100, message = "Discount must not exceed 100%") int discount) {
+    public void setDiscount(@Min(value = 1, message = "INVALID_VOUCHER_DISCOUNT") @Max(value = 100, message = "INVALID_VOUCHER_DISCOUNT") int discount) {
         this.discount = discount;
     }
 }
