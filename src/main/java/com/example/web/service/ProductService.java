@@ -48,7 +48,7 @@ public class ProductService {
             product.setDeleted(true);
             productRepository.save(product);
             return true;
-        }catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }

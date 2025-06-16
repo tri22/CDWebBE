@@ -12,6 +12,7 @@ import org.mapstruct.MappingTarget;
 public interface IUserMapper {
 
     User toUser(UserCreationReq req);
+
     @Mapping(source = "id", target = "id")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "fullName", target = "fullName")

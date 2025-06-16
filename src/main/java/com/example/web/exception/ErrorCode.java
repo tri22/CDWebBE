@@ -22,6 +22,9 @@ public enum ErrorCode {
     PRODUCT_EXISTED(1009, "Product existed!.", HttpStatus.BAD_REQUEST),
     PRODUCT_NOT_EXIST(1009, "Product not exist!.", HttpStatus.BAD_REQUEST),
     VOUCHER_EXISTED(1009, "Voucher existed!.", HttpStatus.BAD_REQUEST),
+    CART_NOT_FOUND(1010, "Cart not found!.", HttpStatus.BAD_REQUEST),
+    PAYMENT_METHOD_NOT_FOUND(1011, "Payment method not found", HttpStatus.BAD_REQUEST),
+    ORDER_NOT_FOUND(1012, "Order not found!.", HttpStatus.BAD_REQUEST),
     ;
 
     private int code;

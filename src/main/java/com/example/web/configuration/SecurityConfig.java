@@ -31,7 +31,6 @@ public class SecurityConfig {
     @Value("${jwt.signerKey}")
     private String SIGNER_KEY;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -51,19 +50,15 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, ApiEndPoint.ADMIN_ENDPOINTS).hasAuthority("ADMIN")
 
                         // other authenticated
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwtConfigurer -> jwtConfigurer
                                 .decoder(jwtDecoder())
-                                .jwtAuthenticationConverter(customJwtAuthentication())
-                        )
-                        .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
-                );
+                                .jwtAuthenticationConverter(customJwtAuthentication()))
+                        .authenticationEntryPoint(new JwtAuthenticationEntryPoint()));
 
         return http.build();
     }
-
 
     @Bean
     JwtAuthenticationConverter customJwtAuthentication() {
@@ -94,7 +89,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173/")); // hoặc domain FE của bạn
+        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // hoặc domain FE của bạn
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

@@ -10,17 +10,21 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-@ToString(exclude = {"order"})
+@ToString(exclude = { "order" })
 @Table(name = "order_details")
 
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
     private int quantity;
+    private String state;
+    private String address;
+    private double price;
     @ManyToOne
     @JoinColumn(name = "order_id")
     @JsonIgnore
