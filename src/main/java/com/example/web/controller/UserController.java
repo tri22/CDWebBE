@@ -9,6 +9,8 @@ import com.example.web.dto.response.UserResponse;
 import com.example.web.entity.User;
 import com.example.web.service.LogService;
 import com.example.web.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +35,9 @@ public class UserController {
 
     @Autowired
     JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @PostMapping
     public ApiResponse<UserResponse> creatUser(@RequestBody @Valid UserCreationReq req) {
@@ -62,7 +67,7 @@ public class UserController {
     @PutMapping("/update/{userId}")
     public ApiResponse<UserResponse> updateUser(@PathVariable("userId") long id,
                                                 @RequestBody UserUpdateReq req,
-                                                HttpServletRequest request) {
+                                                HttpServletRequest request) throws JsonProcessingException {
         ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
         User currentUser = jwtAuthenticationFilter.extractUser(request);
         String ip = request.getRemoteAddr();
@@ -75,7 +80,7 @@ public class UserController {
                     .ip(ip)
                     .level("INFO")
                     .dataIn(req)
-                    .dataOut(result)
+                    .dataOut(objectMapper.writeValueAsString(result))
                     .date(new Date())
                     .resource("USER MANAGEMENT")
                     .build());
