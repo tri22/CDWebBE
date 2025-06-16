@@ -135,9 +135,6 @@ public class UserController {
         }
     }
 
-
-
-
     @GetMapping("/me")
     public ApiResponse<User> getCurrentUser() {
         ApiResponse<User> apiResponse = new ApiResponse<>();

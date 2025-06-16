@@ -3,7 +3,6 @@ package com.example.web.mapper;
 import com.example.web.dto.request.OrderRequest;
 import com.example.web.dto.response.OrderResponse;
 import com.example.web.entity.Order;
-import com.example.web.entity.OrderDetail;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

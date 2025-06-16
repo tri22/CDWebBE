@@ -35,5 +35,7 @@ public class ApiEndPoint {
             // Product url
             "/products",
             "/products/{id}",
+            "/api/payment/vnpay",
+            "/api/payment/vnpay/return",
     };
 }

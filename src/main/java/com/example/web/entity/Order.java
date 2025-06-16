@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
+// @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +29,7 @@ public class Order {
     private User user;
 
     private String note;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
@@ -40,7 +41,8 @@ public class Order {
     private int totalQuantity;
     private LocalDate orderDate;
     private double shippingFee;
-
+    private String transactionId; // Mã giao dịch từ VNPay
+    private String bankCode;// Mã ngân hàng thanh toán
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<OrderDetail> details;
 
@@ -54,6 +56,22 @@ public class Order {
         if (this.status == null) {
             this.status = OrderStatus.NO_PAID;
         }
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
     }
 
     public Long getId() {

@@ -14,6 +14,14 @@ spring:
     properties:
       dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    enabled: true
+  web:
+    resources:
+      static-locations: classpath:/static/
 jwt:
   signerKey: "uCkfHIKvRUqCFCOkH03RXF99oOVJuMjohs2tD1/xmlWQZikBw8kWu2eXzrib7/hl"
 
@@ -26,7 +34,7 @@ vnpay:
   tmnCode: Z7DJFUUY
   hashSecret: ZHANQUIFQ1GU5RIJ9VCFN8BYRR2AMFX8
   url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
-  returnUrl: http://192.168.1.3:8080/api/payment/vnpay/return
+  returnUrl: http://localhost:8080/api/payment/vnpay/return
   version: 2.1.0
   command: pay
-  orderType: other
+  orderType: topup

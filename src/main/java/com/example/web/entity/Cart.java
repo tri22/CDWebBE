@@ -9,7 +9,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"user", "items"})
+@ToString(exclude = { "user", "items" })
 @Getter
 @Setter
 @Table(name = "carts")
