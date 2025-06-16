@@ -34,7 +34,7 @@ public class ProductController {
 
     @Autowired
     private LogService logService;
-
+    @Autowired
     JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @GetMapping

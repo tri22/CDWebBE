@@ -28,7 +28,6 @@ public class ProductStockController {
     @Autowired
     private LogService logService;
 
-    JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @GetMapping("/all")
     public ApiResponse<List<StockIn>> getAllRecords(){

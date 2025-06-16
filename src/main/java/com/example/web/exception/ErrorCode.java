@@ -25,6 +25,8 @@ public enum ErrorCode {
     CART_NOT_FOUND(1010, "Cart not found!.", HttpStatus.BAD_REQUEST),
     PAYMENT_METHOD_NOT_FOUND(1011, "Payment method not found", HttpStatus.BAD_REQUEST),
     ORDER_NOT_FOUND(1012, "Order not found!.", HttpStatus.BAD_REQUEST),
+    INVALID_VOUCHER_CODE(1013, "Code must longer than 4!.", HttpStatus.BAD_REQUEST),
+    INVALID_VOUCHER_DISCOUNT(1014, "Discount must be at least 1% and not exceed 100%!.", HttpStatus.BAD_REQUEST),
     ;
 
     private int code;

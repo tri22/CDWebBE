@@ -26,7 +26,7 @@ public class VoucherController {
 
     @Autowired
     private LogService logService;
-
+    @Autowired
     JwtAuthenticationFilter jwtAuthenticationFilter;
 
 
