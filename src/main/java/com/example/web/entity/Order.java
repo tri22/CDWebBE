@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 public class Order {
     @Id
