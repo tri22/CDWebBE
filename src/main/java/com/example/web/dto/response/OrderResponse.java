@@ -29,6 +29,7 @@ public class OrderResponse {
     int totalQuantity;
     LocalDate orderDate;
     double shippingFee;
+
     Set<OrderDetail> details;
     UserInfoResponse userResponse;
     OrderStatus status;

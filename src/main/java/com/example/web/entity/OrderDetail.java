@@ -12,7 +12,7 @@ import lombok.*;
 @Setter
 @ToString(exclude = { "order" })
 @Table(name = "order_details")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+// @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -146,14 +146,8 @@ public class OrderService {
     }
 
     public OrderResponse updateOrder(Long orderId, OrderRequest request) {
-
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
-        // Gán user nếu có
-        if (request.getUser() != null) {
-            order.setUser(request.getUser());
-        }
-
         // Gán các thuộc tính nếu có
         if (request.getNote() != null) {
             order.setNote(request.getNote());
@@ -183,6 +177,18 @@ public class OrderService {
         return orderMapper.toOrderResponse(orderRepository.save(order));
     }
 
+    // =======================================
+    @Transactional
+    public void updateOrderPaymentStatus(Long orderId, String transactionId, String bankCode, OrderStatus status) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
+        order.setTransactionId(transactionId);
+        order.setBankCode(bankCode);
+        order.setStatus(status);
+        orderRepository.save(order);
+    }
+
+    // ======================================
     private LocalDate[] getWeekRange(LocalDate date) {
         // Lùi về thứ Hai đầu tuần
         LocalDate weekStart = date.with(DayOfWeek.MONDAY);
