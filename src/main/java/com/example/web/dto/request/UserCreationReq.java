@@ -24,6 +24,6 @@ public class UserCreationReq {
     String password;
     String fullName;
     String role;
-    LocalDate birthday;  // thêm dòng này
+    LocalDate birthday; // thêm dòng này
     String phone;
 }

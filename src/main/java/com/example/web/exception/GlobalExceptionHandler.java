@@ -1,6 +1,10 @@
 package com.example.web.exception;
 
 import com.example.web.dto.response.ApiResponse;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -38,6 +42,20 @@ public class GlobalExceptionHandler {
 
         apiResponse.setCode(errorCode.getCode());
         apiResponse.setMessage(errorCode.getMessage());
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    ResponseEntity<ApiResponse> handleValidationException(MethodArgumentNotValidException e) {
+        Map<String, String> errors = new HashMap<>();
+        e.getBindingResult().getFieldErrors().forEach(error -> {
+            errors.put(error.getField(), error.getDefaultMessage()); // vd: username -> USERNAME_INVALID
+        });
+
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCode(ErrorCode.KEY_INVALID.getCode());
+        apiResponse.setResult(errors); // Trả nguyên map lỗi cho client
+
         return ResponseEntity.badRequest().body(apiResponse);
     }
 }
