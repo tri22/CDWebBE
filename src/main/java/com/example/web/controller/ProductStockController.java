@@ -20,6 +20,7 @@ public class ProductStockController {
     @Autowired
     StockInService stockInService;
 
+
     @GetMapping("/all")
     public ApiResponse<List<StockIn>> getAllRecords(){
         ApiResponse<List<StockIn>> apiResponse = new ApiResponse<>();

@@ -27,6 +27,12 @@ public class ProductController {
     @Autowired
     private ProductService pdService;
 
+
+    @Autowired
+    private LogService logService;
+    @Autowired
+    JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @GetMapping
     public List<Product> getAllProducts() {
         return pdService.getAllProducts();

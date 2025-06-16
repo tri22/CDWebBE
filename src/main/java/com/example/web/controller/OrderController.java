@@ -1,5 +1,11 @@
 package com.example.web.controller;
 
+
+
+import com.example.web.configuration.JwtAuthenticationFilter;
+import com.example.web.dto.request.LogRequest;
+
+
 import com.example.web.dto.request.OrderDetailRequest;
 import com.example.web.dto.request.OrderRequest;
 import com.example.web.dto.response.ApiResponse;
@@ -28,6 +34,12 @@ import java.util.Map;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private LogService logService;
+    @Autowired
+    JwtAuthenticationFilter jwtAuthenticationFilter;
+
 
     @Autowired
     private PaymentMethodRepository paymentMethodRepository;

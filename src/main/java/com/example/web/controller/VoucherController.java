@@ -18,6 +18,13 @@ public class VoucherController {
     @Autowired
     VoucherService voucherService;
 
+
+    @Autowired
+    private LogService logService;
+    @Autowired
+    JwtAuthenticationFilter jwtAuthenticationFilter;
+
+
     @PostMapping("/add")
     public ApiResponse<Voucher> creatVoucher(@RequestBody @Valid VoucherRequest req) {
         ApiResponse<Voucher> apiResponse = new ApiResponse<>();

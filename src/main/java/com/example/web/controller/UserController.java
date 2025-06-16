@@ -23,6 +23,14 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
+    @Autowired
+    private LogService logService;
+
+    @Autowired
+    JwtAuthenticationFilter jwtAuthenticationFilter;
+
+
     @PostMapping
     public ApiResponse<UserResponse> creatUser(@RequestBody @Valid UserCreationReq req) {
         ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
