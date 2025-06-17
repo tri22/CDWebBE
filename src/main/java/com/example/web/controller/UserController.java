@@ -9,9 +9,11 @@ import com.example.web.dto.response.UserResponse;
 import com.example.web.entity.User;
 import com.example.web.service.LogService;
 import com.example.web.service.UserService;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +32,17 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     @Autowired
     private LogService logService;
 
     @Autowired
     JwtAuthenticationFilter jwtAuthenticationFilter;
 
+
     @Autowired
     private ObjectMapper objectMapper;
+
 
     @PostMapping
     public ApiResponse<UserResponse> creatUser(@RequestBody @Valid UserCreationReq req) {
@@ -65,6 +70,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{userId}")
+
     public ApiResponse<UserResponse> updateUser(@PathVariable("userId") long id,
                                                 @RequestBody UserUpdateReq req,
                                                 HttpServletRequest request) throws JsonProcessingException {
@@ -99,46 +105,16 @@ public class UserController {
             throw e;
         }
 
+
         return apiResponse;
     }
 
-
     @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<ApiResponse<?>> deleteUser(@PathVariable("userId") long id,
-                                                     HttpServletRequest request) {
-        User currentUser = jwtAuthenticationFilter.extractUser(request);
-        String ip = request.getRemoteAddr();
-
-        try {
-            userService.deleteUser(id);
-            logService.addLog(LogRequest.builder()
-                    .action("DELETE_USER_SUCCESS")
-                    .user(currentUser)
-                    .ip(ip)
-                    .level("INFO")
-                    .dataIn(id)
-                    .dataOut("User deleted successfully")
-                    .date(new Date())
-                    .resource("USER MANAGEMENT")
-                    .build());
-
-            ApiResponse<?> response = new ApiResponse<>();
-            response.setMessage("User deleted successfully");
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            logService.addLog(LogRequest.builder()
-                    .action("DELETE_USER_FAILED")
-                    .user(currentUser)
-                    .ip(ip)
-                    .level("ERROR")
-                    .dataIn(id)
-                    .dataOut(e.getMessage())
-                    .date(new Date())
-                    .resource("USER MANAGEMENT")
-                    .build());
-
-            throw e;
-        }
+    public ResponseEntity<ApiResponse<?>> deleteUser(@PathVariable("userId") long id) {
+        userService.deleteUser(id);
+        ApiResponse<?> response = new ApiResponse<>();
+        response.setMessage("User deleted successfully");
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/me")
