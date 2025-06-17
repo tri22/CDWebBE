@@ -2,8 +2,10 @@ package com.example.web.controller;
 
 import java.util.List;
 
+import com.example.web.configuration.JwtAuthenticationFilter;
 import com.example.web.dto.response.ApiResponse;
 import com.example.web.entity.Product;
+import com.example.web.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,10 +41,9 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id) {
-        return pdService.getProductById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public Product getProductById(@PathVariable Long id) {
+        return pdService.getProductById(id);
+
     }
 
     @PostMapping

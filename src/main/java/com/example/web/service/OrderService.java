@@ -9,10 +9,7 @@ import com.example.web.exception.AppException;
 import com.example.web.exception.ErrorCode;
 import com.example.web.mapper.IOrderMapper;
 import com.example.web.mapper.IUserMapper;
-import com.example.web.repository.CartRepository;
-import com.example.web.repository.OrderDetailRepository;
-import com.example.web.repository.OrderRepository;
-import com.example.web.repository.UserRepository;
+import com.example.web.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +37,7 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private VoucherRepository voucherRepository;
 
     @Autowired
     private OrderDetailRepository orderDetailRepository;
@@ -62,7 +59,7 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderResponse createOrderFromCart(String note, PaymentMethod paymentMethod, double shippingFee) {
+    public OrderResponse createOrderFromCart(String note, PaymentMethod paymentMethod, double shippingFee, int discount,String voucherCode) {
         User user = userService.getCurrentUser();
         Cart cart = user.getCart();
 
@@ -99,9 +96,22 @@ public class OrderService {
 
         order.setDetails(details);
         order.setTotalQuantity(totalQuantity);
-        order.setTotalPrice(totalPrice + shippingFee);
+        order.setTotalPrice((totalPrice + shippingFee)*(1- (double) discount /100));
 
         Order savedOrder = orderRepository.save(order);
+
+        Voucher voucher = null;
+        if (voucherCode != null && !voucherCode.trim().isEmpty()) {
+            voucher = voucherRepository.findDistinctByCode(voucherCode);
+
+            if (voucher.getQuantity() <= 0) {
+                throw new AppException(ErrorCode.VOUCHER_OUT_OF_STOCK);
+            }
+
+            voucher.setQuantity(voucher.getQuantity() - 1);
+            voucherRepository.save(voucher);
+        }
+
 
         // Xoá giỏ hàng sau khi tạo đơn hàng thành công
         cart.getItems().clear();

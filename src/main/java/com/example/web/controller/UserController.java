@@ -1,10 +1,13 @@
 package com.example.web.controller;
 
+import com.example.web.configuration.JwtAuthenticationFilter;
+import com.example.web.dto.request.LogRequest;
 import com.example.web.dto.request.UserCreationReq;
 import com.example.web.dto.request.UserUpdateReq;
 import com.example.web.dto.response.ApiResponse;
 import com.example.web.dto.response.UserResponse;
 import com.example.web.entity.User;
+import com.example.web.service.LogService;
 import com.example.web.service.UserService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController

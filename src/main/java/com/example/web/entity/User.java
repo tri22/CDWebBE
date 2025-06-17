@@ -32,13 +32,11 @@ public class User {
     @OneToOne(mappedBy = "user")
     @JsonIgnore
     private Cart cart;
-    @OneToMany(mappedBy = "user")
-    private Set<Blog> blogs;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private Set<Order> orders;
-    @OneToMany(mappedBy = "user")
-    private Set<Comment> comments;
+
 
     public long getId() {
         return id;
@@ -120,13 +118,7 @@ public class User {
         this.cart = cart;
     }
 
-    public Set<Blog> getBlogs() {
-        return blogs;
-    }
 
-    public void setBlogs(Set<Blog> blogs) {
-        this.blogs = blogs;
-    }
 
     public Set<Order> getOrders() {
         return orders;
@@ -136,11 +128,5 @@ public class User {
         this.orders = orders;
     }
 
-    public Set<Comment> getComments() {
-        return comments;
-    }
 
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
 }

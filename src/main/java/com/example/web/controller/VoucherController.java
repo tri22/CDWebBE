@@ -1,8 +1,10 @@
 package com.example.web.controller;
 
+import com.example.web.configuration.JwtAuthenticationFilter;
 import com.example.web.dto.request.VoucherRequest;
 import com.example.web.dto.response.ApiResponse;
 import com.example.web.entity.Voucher;
+import com.example.web.service.LogService;
 import com.example.web.service.VoucherService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +38,14 @@ public class VoucherController {
     public ApiResponse<List<Voucher>> getAllVouchers() {
         return ApiResponse.<List<Voucher>>builder()
                 .result(voucherService.getAllVoucher())
+                .build();
+
+    }
+
+    @GetMapping("/find/{code}")
+    public ApiResponse<Voucher> getVoucherByCode( @PathVariable String code) {
+        return ApiResponse.<Voucher>builder()
+                .result(voucherService.getVoucherByCode(code))
                 .build();
 
     }

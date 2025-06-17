@@ -16,6 +16,7 @@ import com.example.web.exception.ErrorCode;
 import com.example.web.repository.PaymentMethodRepository;
 import com.example.web.dto.response.ProductResponse;
 import com.example.web.entity.Product;
+import com.example.web.service.LogService;
 import com.example.web.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class OrderController {
         PaymentMethod paymentMethod = paymentMethodRepository.findById(request.getPaymentMethodId())
                 .orElseThrow(() -> new AppException(ErrorCode.PAYMENT_METHOD_NOT_FOUND));
         return ResponseEntity
-                .ok(orderService.createOrderFromCart(request.getNote(), paymentMethod, request.getShippingFee()));
+                .ok(orderService.createOrderFromCart(request.getNote(), paymentMethod, request.getShippingFee(), request.getDiscount(), request.getVoucherCode()));
     }
 
     @GetMapping("/{orderId}")

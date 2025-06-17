@@ -19,8 +19,6 @@ public class Comment {
     private String content;
     private Date createAt;
     private double rating;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
 
 }

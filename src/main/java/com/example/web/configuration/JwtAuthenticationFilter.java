@@ -1,5 +1,7 @@
 package com.example.web.configuration;
 
+import com.example.web.entity.User;
+import com.example.web.repository.UserRepository;
 import com.example.web.service.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,6 +22,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private JWTService jwtService;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

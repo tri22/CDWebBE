@@ -13,8 +13,7 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthenticationReq {
-    @Size(min = 3, message = "USERNAME_INVALID")
+
     String username;
-    @Size(min = 8, message = "PASSWORD_INVALID")
     String password;
 }

@@ -27,6 +27,9 @@ public enum ErrorCode {
     ORDER_NOT_FOUND(1012, "Order not found!.", HttpStatus.BAD_REQUEST),
     INVALID_VOUCHER_CODE(1013, "Code must longer than 4!.", HttpStatus.BAD_REQUEST),
     INVALID_VOUCHER_DISCOUNT(1014, "Discount must be at least 1% and not exceed 100%!.", HttpStatus.BAD_REQUEST),
+    VOUCHER_NOT_FOUND(1015, "Voucher not found!", HttpStatus.BAD_REQUEST),
+    VOUCHER_OUT_OF_STOCK(1016, "Voucher out of stock!", HttpStatus.BAD_REQUEST),
+
     ;
 
     private int code;
