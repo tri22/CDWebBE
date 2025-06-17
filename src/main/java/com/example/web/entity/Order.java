@@ -1,14 +1,10 @@
 package com.example.web.entity;
-
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 import com.example.web.entity.enums.OrderStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "orders")

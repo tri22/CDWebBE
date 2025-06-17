@@ -4,10 +4,12 @@ import com.example.web.dto.request.LogRequest;
 import com.example.web.entity.Log;
 import com.example.web.repository.LogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class LogService {
@@ -37,7 +39,9 @@ public class LogService {
 
     }
 
-    public List<Log> getAllLog() {
-        return logRepository.findAll();
+    @Async
+    public CompletableFuture<List<Log>> getAllLogAsync() {
+        return CompletableFuture.completedFuture(logRepository.findAll());
     }
+
 }

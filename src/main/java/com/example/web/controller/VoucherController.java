@@ -76,6 +76,14 @@ public class VoucherController {
 
     }
 
+    @GetMapping("/find/{code}")
+    public ApiResponse<Voucher> getVoucherByCode( @PathVariable String code) {
+        return ApiResponse.<Voucher>builder()
+                .result(voucherService.getVoucherByCode(code))
+                .build();
+
+    }
+
     @PutMapping("/update/{voucherId}")
     public ApiResponse<Voucher> updateVoucher(@PathVariable("voucherId") long id,
                                               @RequestBody VoucherRequest req,

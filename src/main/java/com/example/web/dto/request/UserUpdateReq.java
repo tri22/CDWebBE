@@ -22,6 +22,7 @@ public class UserUpdateReq {
     String email;
     String phone;
     String fullName;
+    String address;
     String role;
     LocalDate birthday;
 }

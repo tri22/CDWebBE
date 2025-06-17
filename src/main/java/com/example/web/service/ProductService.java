@@ -25,9 +25,9 @@ public class ProductService {
         return productRepository.findByDeletedFalse();
     }
 
-    public Optional<ProductResponse> getProductById(Long id) {
-        return productRepository.findById(id)
-                .map(productMapper::toProductResponse);
+    public Product getProductById(Long id) {
+        Optional<Product> product= productRepository.findById(id);
+        return product.orElse(null);
     }
 
     public ProductResponse createProduct(ProductRequest productRequest) {

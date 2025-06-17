@@ -22,6 +22,7 @@ public class UserCreationReq {
     String username;
     @Size(min = 8, message = "PASSWORD_INVALID")
     String password;
+    String email;
     String fullName;
     String role;
     LocalDate birthday;  // thêm dòng này

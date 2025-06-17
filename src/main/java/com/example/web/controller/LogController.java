@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/log")
@@ -17,11 +18,14 @@ public class LogController {
     @Autowired
     private LogService logService;
 
-    @GetMapping("/all")
-    public ApiResponse<List<Log>> getAllLog() {
-        ApiResponse<List<Log>> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(logService.getAllLog());
-        return apiResponse;
+    @GetMapping("/all-async")
+    public CompletableFuture<ApiResponse<List<Log>>> getAllLogAsync() {
+        return logService.getAllLogAsync().thenApply(logs -> {
+            ApiResponse<List<Log>> res = new ApiResponse<>();
+            res.setResult(logs);
+            return res;
+        });
     }
+
 }
 

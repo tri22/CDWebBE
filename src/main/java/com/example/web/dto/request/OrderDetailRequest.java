@@ -23,4 +23,6 @@ public class OrderDetailRequest {
     private String note;
     private Long paymentMethodId;
     private double shippingFee;
+    private int discount;
+    private String voucherCode;
 }
