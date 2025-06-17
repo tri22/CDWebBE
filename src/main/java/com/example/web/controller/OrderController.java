@@ -1,5 +1,7 @@
 package com.example.web.controller;
 
+import com.example.web.configuration.JwtAuthenticationFilter;
+import com.example.web.dto.request.LogRequest;
 import com.example.web.dto.request.OrderDetailRequest;
 import com.example.web.dto.request.OrderRequest;
 import com.example.web.dto.response.ApiResponse;
@@ -10,7 +12,10 @@ import com.example.web.exception.ErrorCode;
 import com.example.web.repository.PaymentMethodRepository;
 import com.example.web.dto.response.ProductResponse;
 import com.example.web.entity.Product;
+import com.example.web.entity.User;
+import com.example.web.service.LogService;
 import com.example.web.service.OrderService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +33,11 @@ import java.util.Map;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private LogService logService;
+
+    @Autowired
+    JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
     private PaymentMethodRepository paymentMethodRepository;
@@ -60,8 +70,33 @@ public class OrderController {
     }
 
     @DeleteMapping("/delete/{orderId}")
-    public void deleteOrder(@PathVariable Long orderId) {
-        orderService.cancelOrder(orderId);
+    public void deleteOrder(@PathVariable Long orderId, @RequestBody HttpServletRequest request) {
+        User user = jwtAuthenticationFilter.extractUser(request);
+        try {
+            orderService.cancelOrder(orderId);
+            logService.addLog(LogRequest.builder()
+                    .action("DELETE_ORDER_SUCCESS")
+                    .user(user)
+                    .ip(request.getRemoteAddr())
+                    .level("INFO")
+                    .dataIn(orderId)
+                    .dataOut("Success")
+                    .date(new Date())
+                    .resource("ORDER MANAGEMENT")
+                    .build());
+        } catch (Exception e) {
+            logService.addLog(LogRequest.builder()
+                    .action("DELETE_ORDER_FAIL")
+                    .user(user)
+                    .ip(request.getRemoteAddr())
+                    .level("ERROR")
+                    .dataIn(orderId)
+                    .dataOut("Fail")
+                    .date(new Date())
+                    .resource("ORDER MANAGEMENT")
+                    .build());
+            throw e;
+        }
     }
 
     @GetMapping("/all")
@@ -72,9 +107,35 @@ public class OrderController {
     }
 
     @PutMapping("/update/{orderId}")
-    public ApiResponse<OrderResponse> updateOrder(@PathVariable Long orderId, @RequestBody OrderRequest request) {
+    public ApiResponse<OrderResponse> updateOrder(@PathVariable Long orderId,
+            @RequestBody OrderRequest request,
+            HttpServletRequest httpServletRequest) {
+        User user = jwtAuthenticationFilter.extractUser(httpServletRequest);
         ApiResponse<OrderResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(orderService.updateOrder(orderId, request));
+
+        try {
+            OrderResponse result = orderService.updateOrder(orderId, request);
+
+            logService.addLog(LogRequest.builder()
+                    .action("UPDATE_ORDER_SUCCESS")
+                    .user(user)
+                    .ip(httpServletRequest.getRemoteAddr())
+                    .level("INFO")
+                    .dataIn(request)
+                    .dataOut(result)
+                    .build());
+            apiResponse.setResult(result);
+        } catch (Exception e) {
+            logService.addLog(LogRequest.builder()
+                    .action("UPDATE_ORDER_FAILED")
+                    .user(user)
+                    .ip(httpServletRequest.getRemoteAddr())
+                    .level("ERROR")
+                    .dataIn(request)
+                    .dataOut(e.getMessage())
+                    .build());
+            throw e; // ném lại để controller advice xử lý nếu có
+        }
         return apiResponse;
     }
 

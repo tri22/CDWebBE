@@ -1,6 +1,5 @@
 package com.example.web.service;
 
-
 import com.example.web.dto.request.AuthenticationReq;
 import com.example.web.dto.request.IntrospectReq;
 import com.example.web.dto.response.AuthenticationResponse;
@@ -22,17 +21,18 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
-
 
 @Service
 @RequiredArgsConstructor
@@ -63,7 +63,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationReq request){
+    public AuthenticationResponse authenticate(AuthenticationReq request) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         var user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
@@ -91,8 +91,7 @@ public class AuthenticationService {
                 .issuer("cdweb.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
-                ))
+                        Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
                 .claim("Role", buildScope(user))
                 .build();
 
@@ -109,9 +108,9 @@ public class AuthenticationService {
         }
     }
 
-    private String buildScope(User user){
+    private String buildScope(User user) {
         StringJoiner stringJoiner = new StringJoiner(" ");
-        if (user.getRole()!=null)
+        if (user.getRole() != null)
             stringJoiner.add(user.getRole());
         return stringJoiner.toString();
     }
